@@ -1,5 +1,5 @@
 <template>
-  <section class="main" :class="{ 'hidden': !todos.length }">
+  <section class="main" v-show="todos.length">
     <input class="toggle-all" type="checkbox" autofocus>
     <todos :todos="todos"></todos>
   </section>

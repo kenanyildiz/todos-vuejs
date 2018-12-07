@@ -12,7 +12,7 @@
 </template>
 
 <script>
-import * as types from "@/types"
+import * as types from "@/types";
 import { mapActions } from "vuex";
 
 export default {
@@ -41,6 +41,7 @@ export default {
     },
     updateTodo() {
       if (this.todo.title) {
+        this.todo.completed = this.todo.checked;
         this._updateTodo(this.todo);
         this.editable = false;
       }

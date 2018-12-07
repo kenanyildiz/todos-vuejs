@@ -4,21 +4,43 @@ import Vuex from "vuex";
 import * as types from "./types";
 
 Vue.use(Vuex);
-
+const filters = ["all", "active", "completed"];
 export default new Vuex.Store({
   state: {
     prefix: "vue.todo",
     todos: [
-      { id: 1, completed: false, title: "go home", checked: false },
-      { id: 2, completed: true, title: "drink water", checked: true },
-      { id: 3, completed: false, title: "cry", checked: false }
+      {
+        id: 1,
+        completed: false,
+        title: "go home",
+        checked: false,
+        isVisible: true
+      },
+      {
+        id: 2,
+        completed: true,
+        title: "drink water",
+        checked: true,
+        isVisible: true
+      },
+      {
+        id: 3,
+        completed: false,
+        title: "cry",
+        checked: false,
+        isVisible: true
+      }
     ],
     todo: {
       id: 1,
       completed: false,
       title: "title",
       checked: false
-    }
+    },
+    activeFilter:
+      filters.indexOf(window.location.hash.split("/")[1]) > -1
+        ? window.location.hash.split("/")[1]
+        : "all"
   },
   mutations: {
     [types.MUTATE_ADD_TODO]: (state, todo) => {
@@ -32,6 +54,19 @@ export default new Vuex.Store({
       const item = state.todos.find(todo => todo.id === payload.id);
       const index = state.todos.indexOf(item);
       state.todos.splice(index, 1);
+    },
+    [types.MUTATE_CHANGE_FILTER]: (state, filter) => {
+      state.activeFilter = filter;
+    },
+    [types.MUTATE_CLEAR_COMPLETED]: state => {
+      state.todos = state.todos.filter(todo => todo.completed !== true);
+    },
+    [types.MUTATE_MARK_ALL_COMPLETED]: state => {
+      state.todos = state.todos.map(todo => {
+        todo.completed = true;
+        todo.checked = true;
+        return todo;
+      });
     }
   },
   actions: {
@@ -43,6 +78,15 @@ export default new Vuex.Store({
     },
     [types.ACTIONS_REMOVE_TODO]: ({ commit }, payload) => {
       commit(types.MUTATE_REMOVE_TODO, payload);
+    },
+    [types.ACTIONS_CHANGE_FILTER]: ({ commit }, payload) => {
+      commit(types.MUTATE_CHANGE_FILTER, payload);
+    },
+    [types.ACTIONS_CLEAR_COMPLETED]: ({ commit }) => {
+      commit(types.MUTATE_CLEAR_COMPLETED);
+    },
+    [types.ACTIONS_MARK_ALL_COMPLETED]: ({ commit }) => {
+      commit(types.MUTATE_MARK_ALL_COMPLETED);
     }
   },
   getters: {
@@ -56,15 +100,18 @@ export default new Vuex.Store({
       return state.todo;
     },
     [types.GET_FILTERED_TODOS]: state => payload => {
-      let todo = [];
-      if (payload.filterBy === "ACTIVE") {
-        todo = state.todos.filter(todo => (todo.checked !== true))
-      } else if (payload.filterBy === "COMPLETED") {
-        todo = state.todos.filter(todo => (todo.checked === true))
-      } else if (payload.filterBy === "ALL") {
-        todo = state.todos;
+      let todos = [];
+      if (payload.filterBy === "active") {
+        todos = state.todos.filter(todo => todo.checked !== true);
+      } else if (payload.filterBy === "completed") {
+        todos = state.todos.filter(todo => todo.completed === true);
+      } else if (payload.filterBy === "all") {
+        todos = state.todos;
       }
-      return todo;
+      return todos;
+    },
+    [types.GET_ACTIVE_FILTER]: state => {
+      return state.activeFilter;
     }
   }
 });
