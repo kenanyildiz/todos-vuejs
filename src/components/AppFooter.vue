@@ -71,14 +71,13 @@ export default {
 .footer {
   min-height: 20px;
   height: auto;
-}
-
-label[for="toggle-all"] {
-  margin-top: 50px;
-  margin-bottom: 7px;
-  justify-content: center;
-  display: flex;
-  position: relative;
-  z-index: 1;
+  label[for="toggle-all"] {
+    margin-top: 50px;
+    margin-bottom: 7px;
+    justify-content: center;
+    display: flex;
+    position: relative;
+    z-index: 1;
+  }
 }
 </style>

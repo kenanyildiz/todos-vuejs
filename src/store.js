@@ -1,13 +1,15 @@
 import Vue from "vue";
 import Vuex from "vuex";
+import createPersistedState from "vuex-persistedstate";
 
 import * as types from "./types";
 
 Vue.use(Vuex);
 const filters = ["all", "active", "completed"];
 export default new Vuex.Store({
+  plugins: [createPersistedState({ key: "todos-vuejs", paths: ["todos"] })],
   state: {
-    prefix: "vue.todo",
+    prefix: "todos-vuejs",
     todos: [
       {
         id: 1,
@@ -37,7 +39,10 @@ export default new Vuex.Store({
       title: "title",
       checked: false
     },
-    activeFilter: filters.indexOf(window.location.hash.slice(2)) > -1 ? window.location.hash.slice(2) : "all"
+    activeFilter:
+      filters.indexOf(window.location.hash.slice(2)) > -1
+        ? window.location.hash.slice(2)
+        : "all"
   },
   mutations: {
     [types.MUTATE_ADD_TODO]: (state, todo) => {
@@ -98,12 +103,15 @@ export default new Vuex.Store({
     },
     [types.GET_FILTERED_TODOS]: state => payload => {
       let todos = [];
-      if (payload.filterBy === "active") {
-        todos = state.todos.filter(todo => todo.checked !== true);
-      } else if (payload.filterBy === "completed") {
-        todos = state.todos.filter(todo => todo.completed === true);
-      } else if (payload.filterBy === "all") {
-        todos = state.todos;
+      switch (payload.filterBy) {
+        case "active":
+          todos = state.todos.filter(todo => todo.checked !== true);
+          break;
+        case "completed":
+          todos = state.todos.filter(todo => todo.completed === true);
+          break;
+        default:
+          todos = state.todos;
       }
       return todos;
     },

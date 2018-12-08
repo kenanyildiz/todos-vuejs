@@ -13,6 +13,10 @@ const router = new Router({
       name: "home",
       component: Home,
       alias: ["/all", "/active", "/completed"]
+    },
+    {
+      path: "*",
+      redirect: "/"
     }
   ]
 });

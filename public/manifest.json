@@ -1,6 +1,6 @@
 {
-  "name": "vue.todo",
-  "short_name": "vue.todo",
+  "name": "todos-vuejs",
+  "short_name": "todos-vuejs",
   "icons": [
     {
       "src": "./img/icons/android-chrome-192x192.png",
