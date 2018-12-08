@@ -5,13 +5,14 @@ import Home from "./views/Home.vue";
 Vue.use(Router);
 
 const router = new Router({
-  mode: "history",
+  mode: "hash",
   base: process.env.BASE_URL,
   routes: [
     {
       path: "/",
       name: "home",
-      component: Home
+      component: Home,
+      alias: ["/all", "/active", "/completed"]
     }
   ]
 });

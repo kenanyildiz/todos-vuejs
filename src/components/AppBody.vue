@@ -1,7 +1,7 @@
 <template>
   <section class="main" v-show="todos.length">
     <input class="toggle-all" type="checkbox" autofocus>
-    <todos :todos="todos"></todos>
+    <todos></todos>
   </section>
 </template>
 

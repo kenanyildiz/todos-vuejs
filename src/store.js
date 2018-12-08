@@ -37,10 +37,7 @@ export default new Vuex.Store({
       title: "title",
       checked: false
     },
-    activeFilter:
-      filters.indexOf(window.location.hash.split("/")[1]) > -1
-        ? window.location.hash.split("/")[1]
-        : "all"
+    activeFilter: filters.indexOf(window.location.hash.slice(2)) > -1 ? window.location.hash.slice(2) : "all"
   },
   mutations: {
     [types.MUTATE_ADD_TODO]: (state, todo) => {
@@ -55,8 +52,8 @@ export default new Vuex.Store({
       const index = state.todos.indexOf(item);
       state.todos.splice(index, 1);
     },
-    [types.MUTATE_CHANGE_FILTER]: (state, filter) => {
-      state.activeFilter = filter;
+    [types.MUTATE_CHANGE_FILTER]: (state, payload) => {
+      state.activeFilter = payload.filterBy;
     },
     [types.MUTATE_CLEAR_COMPLETED]: state => {
       state.todos = state.todos.filter(todo => todo.completed !== true);

@@ -6,7 +6,7 @@
     <ul class="filters">
       <li v-for="(item, index) in filters" :key="index">
         <a :class="{ 'selected': item.isSelected }" :href="item.href"
-           @click="filterBy(item.id)">{{ item.text }}</a>
+           @click="changeActiveFilter({ filterBy: item.id })">{{ item.text }}</a>
       </li>
     </ul>
     <!-- Hidden if no completed items are left ↓ -->
@@ -18,14 +18,26 @@
 <script>
 import * as types from "@/types";
 import { mapGetters, mapActions } from "vuex";
+import { utilityMixin } from "../utility.mixin";
 
 export default {
   name: "AppFooter",
+  mixins: [utilityMixin],
   data() {
     return {
       filters: [
-        { isSelected: false, id: "all", text: "All", href: "#/all" },
-        { isSelected: false, id: "active", text: "Active", href: "#/active" },
+        {
+          isSelected: false,
+          id: "all",
+          text: "All",
+          href: "#/all"
+        },
+        {
+          isSelected: false,
+          id: "active",
+          text: "Active",
+          href: "#/active"
+        },
         {
           isSelected: false,
           id: "completed",
@@ -38,19 +50,7 @@ export default {
   computed: {
     ...mapGetters({
       todos: types.TODOS,
-      getFilteredTodos: types.GET_FILTERED_TODOS,
-      activeFilter: types.GET_ACTIVE_FILTER
     }),
-    filteredTodos: {
-      get() {
-        return this.getFilteredTodos({ filterBy: this.activeFilter });
-      },
-      set() {
-        this.filteredTodos = this.getFilteredTodos({
-          filterBy: this.activeFilter
-        });
-      }
-    },
     active() {
       return this.getFilteredTodos({ filterBy: "active" }).length;
     },
@@ -60,19 +60,9 @@ export default {
   },
   methods: {
     ...mapActions({
-      _activeFilter: types.ACTIONS_CHANGE_FILTER,
-      clearCompleted: types.ACTIONS_CLEAR_COMPLETED,
-      markAllCompleted: types.ACTIONS_MARK_ALL_COMPLETED
-    }),
-    filterBy($filter) {
-      this._activeFilter($filter);
-    }
-  },
-  watch: {
-    $route(to, from) {
-      // react to route changes...
-      this.filterBy(window.location.hash.split("/")[1]);
-    }
+      clearCompleted: types["ACTIONS_CLEAR_COMPLETED"],
+      markAllCompleted: types["ACTIONS_MARK_ALL_COMPLETED"]
+    })
   }
 };
 </script>
