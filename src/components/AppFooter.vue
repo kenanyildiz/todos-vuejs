@@ -49,7 +49,7 @@ export default {
   },
   computed: {
     ...mapGetters({
-      todos: types.TODOS,
+      todos: types.TODOS
     }),
     active() {
       return this.getFilteredTodos({ filterBy: "active" }).length;

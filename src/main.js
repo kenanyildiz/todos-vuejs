@@ -4,7 +4,7 @@ import router from "./router";
 import store from "./store";
 import "./registerServiceWorker";
 
-import "../node_modules/todomvc-app-css/index.css"
+import "../node_modules/todomvc-app-css/index.css";
 
 Vue.config.productionTip = false;
 

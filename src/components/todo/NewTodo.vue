@@ -4,7 +4,7 @@
 </template>
 
 <script>
-import * as types from "@/types"
+import * as types from "@/types";
 import { mapActions, mapGetters } from "vuex";
 
 export default {
@@ -22,7 +22,7 @@ export default {
       if (this.title) {
         let newTodo = { id: new Date().getTime(), title: this.title };
         this.addTodo(Object.assign({}, this.defaultTodo, newTodo));
-        this.resetTitle()
+        this.resetTitle();
       }
     },
     blurInput() {

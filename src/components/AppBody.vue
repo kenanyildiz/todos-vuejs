@@ -6,7 +6,7 @@
 </template>
 
 <script>
-import * as types from "@/types"
+import * as types from "@/types";
 import Todos from "@/components/todo/Todos.vue";
 import { mapGetters } from "vuex";
 

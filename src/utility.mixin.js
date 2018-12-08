@@ -24,7 +24,7 @@ export const utilityMixin = {
     })
   },
   watch: {
-    $route(to, from) {
+    $route() {
       // react to route changes...
       this.changeActiveFilter({ filterBy: window.location.hash.slice(2) });
     }
