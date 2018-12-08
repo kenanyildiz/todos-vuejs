@@ -7,7 +7,9 @@ import * as types from "./types";
 Vue.use(Vuex);
 const filters = ["all", "active", "completed"];
 export default new Vuex.Store({
-  plugins: [createPersistedState({ key: "todos-vuejs", paths: ["todos"] })],
+  plugins: [
+    createPersistedState({ key: "todos-vuejs", paths: ["todos"] }),
+  ],
   state: {
     prefix: "todos-vuejs",
     todos: [
@@ -58,7 +60,8 @@ export default new Vuex.Store({
       state.todos.splice(index, 1);
     },
     [types.MUTATE_CHANGE_FILTER]: (state, payload) => {
-      state.activeFilter = filters.indexOf(payload.filterBy) > -1 ? payload.filterBy : "all";
+      state.activeFilter =
+        filters.indexOf(payload.filterBy) > -1 ? payload.filterBy : "all";
     },
     [types.MUTATE_CLEAR_COMPLETED]: state => {
       state.todos = state.todos.filter(todo => todo.completed !== true);
