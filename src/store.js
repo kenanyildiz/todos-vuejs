@@ -58,7 +58,7 @@ export default new Vuex.Store({
       state.todos.splice(index, 1);
     },
     [types.MUTATE_CHANGE_FILTER]: (state, payload) => {
-      state.activeFilter = payload.filterBy;
+      state.activeFilter = filters.indexOf(payload.filterBy) > -1 ? payload.filterBy : "all";
     },
     [types.MUTATE_CLEAR_COMPLETED]: state => {
       state.todos = state.todos.filter(todo => todo.completed !== true);

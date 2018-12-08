@@ -5,7 +5,7 @@
     <!-- Remove this if you don't implement routing -->
     <ul class="filters">
       <li v-for="(item, index) in filters" :key="index">
-        <a :class="{ 'selected': item.isSelected }" :href="item.href"
+        <a :class="{ 'selected': (item.id === activeFilter) }" :href="item.href"
            @click="changeActiveFilter({ filterBy: item.id })">{{ item.text }}</a>
       </li>
     </ul>
@@ -27,19 +27,16 @@ export default {
     return {
       filters: [
         {
-          isSelected: false,
           id: "all",
           text: "All",
           href: "#/all"
         },
         {
-          isSelected: false,
           id: "active",
           text: "Active",
           href: "#/active"
         },
         {
-          isSelected: false,
           id: "completed",
           text: "Completed",
           href: "#/completed"
